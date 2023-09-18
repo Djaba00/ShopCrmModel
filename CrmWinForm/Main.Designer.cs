@@ -67,8 +67,9 @@
             // productAddToolStripMenuItem1
             // 
             productAddToolStripMenuItem1.Name = "productAddToolStripMenuItem1";
-            productAddToolStripMenuItem1.Size = new Size(126, 22);
+            productAddToolStripMenuItem1.Size = new Size(180, 22);
             productAddToolStripMenuItem1.Text = "Добавить";
+            productAddToolStripMenuItem1.Click += ProductAddToolStripMenuItem1_Click;
             // 
             // sellerToolStripMenuItem
             // 
@@ -81,8 +82,9 @@
             // sellerAddToolStripMenuItem
             // 
             sellerAddToolStripMenuItem.Name = "sellerAddToolStripMenuItem";
-            sellerAddToolStripMenuItem.Size = new Size(126, 22);
+            sellerAddToolStripMenuItem.Size = new Size(180, 22);
             sellerAddToolStripMenuItem.Text = "Добавить";
+            sellerAddToolStripMenuItem.Click += SellerAddToolStripMenuItem2_Click;
             // 
             // customerToolStripMenuItem
             // 
@@ -95,7 +97,7 @@
             // customerAddToolStripMenuItem2
             // 
             customerAddToolStripMenuItem2.Name = "customerAddToolStripMenuItem2";
-            customerAddToolStripMenuItem2.Size = new Size(180, 22);
+            customerAddToolStripMenuItem2.Size = new Size(126, 22);
             customerAddToolStripMenuItem2.Text = "Добавить";
             customerAddToolStripMenuItem2.Click += CustomerAddToolStripMenuItem2_Click;
             // 

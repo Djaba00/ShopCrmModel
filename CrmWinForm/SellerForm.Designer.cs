@@ -1,6 +1,6 @@
 ﻿namespace CrmWinForm
 {
-    partial class CustomerForm
+    partial class SellerForm
     {
         /// <summary>
         /// Required designer variable.
@@ -61,7 +61,7 @@
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click;
             // 
-            // CustomerForm
+            // SellerForm
             // 
             AcceptButton = button1;
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -70,9 +70,9 @@
             Controls.Add(button1);
             Controls.Add(label1);
             Controls.Add(textBox1);
-            Name = "CustomerForm";
-            Text = "CustomerForm";
-            Load += CustomerForm_Load;
+            Name = "SellerForm";
+            Text = "SellerForm";
+            Load += SellerForm_Load;
             ResumeLayout(false);
             PerformLayout();
         }
