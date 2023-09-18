@@ -41,7 +41,7 @@
             dataGridView.RowTemplate.Height = 25;
             dataGridView.Size = new Size(776, 426);
             dataGridView.TabIndex = 0;
-            dataGridView.CellContentClick += Catalog_Load;
+            dataGridView.CellContentClick += dataGridView1_CellContentClick;
             // 
             // Catalog
             // 
@@ -51,6 +51,7 @@
             Controls.Add(dataGridView);
             Name = "Catalog";
             Text = "Catalog";
+            Load += Catalog_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView).EndInit();
             ResumeLayout(false);
         }

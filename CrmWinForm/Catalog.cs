@@ -20,6 +20,11 @@ namespace CrmWinForm
             dataGridView.DataSource = set.Local.ToBindingList();
         }
 
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
         private void Catalog_Load(object sender, EventArgs e)
         {
 
