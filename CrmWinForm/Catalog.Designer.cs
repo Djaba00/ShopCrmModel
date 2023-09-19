@@ -1,6 +1,7 @@
 ﻿namespace CrmWinForm
 {
     partial class Catalog<T>
+        where T : class
     {
         /// <summary>
         /// Required designer variable.

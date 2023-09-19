@@ -19,6 +19,11 @@ namespace CrmWinForm
         CrmContext db;
         DbSet<T> set;
 
+        public Catalog()
+        {
+            InitializeComponent();
+        }
+
         public Catalog(DbSet<T> set, CrmContext db)
         {
             InitializeComponent();
