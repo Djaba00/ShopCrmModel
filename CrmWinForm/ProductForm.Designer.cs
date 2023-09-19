@@ -76,6 +76,7 @@
             // numericUpDown2
             // 
             numericUpDown2.Location = new Point(152, 64);
+            numericUpDown2.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             numericUpDown2.Name = "numericUpDown2";
             numericUpDown2.Size = new Size(349, 23);
             numericUpDown2.TabIndex = 4;
