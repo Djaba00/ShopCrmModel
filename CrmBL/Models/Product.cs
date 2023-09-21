@@ -10,7 +10,7 @@
 
         public override string ToString()
         {
-            return Name;
+            return $"{Name} - {Price} руб.";
         }
 
         public override int GetHashCode()

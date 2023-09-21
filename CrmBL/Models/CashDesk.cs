@@ -22,13 +22,14 @@ namespace CrmBL.Models
 
         public event EventHandler<Check> CheckClosed;
 
-        public CashDesk(int number, Seller seller)
+        public CashDesk(int number, Seller seller, CrmContext db)
         {
             Number = number;
             Seller = seller;
             Queue = new Queue<Cart>();
             IsModel = true;
-            MaxQueueLenght = 10;
+            MaxQueueLenght = 100;
+            this.db = db ?? new CrmContext();
         }
 
         public void Enqueue(Cart cart)

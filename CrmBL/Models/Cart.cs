@@ -10,7 +10,8 @@ namespace CrmBL.Models
     public class Cart : IEnumerable
     {
         public Customer Customer { get; set; }
-        Dictionary<Product, int> Products { get; set; }
+        public Dictionary<Product, int> Products { get; private set; }
+        public decimal Price => GetAll().Sum(p => p.Price);
 
         public Cart(Customer customer)
         {
