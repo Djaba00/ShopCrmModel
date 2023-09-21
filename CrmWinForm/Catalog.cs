@@ -38,7 +38,7 @@ namespace CrmWinForm
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void AddButton_Click(object sender, EventArgs e)
         {
 
             if (typeof(T) == typeof(Product))
@@ -55,7 +55,7 @@ namespace CrmWinForm
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void UpdateButton_Click(object sender, EventArgs e)
         {
             var id = dataGridView.SelectedRows[0].Cells[0].Value;
 
@@ -104,7 +104,7 @@ namespace CrmWinForm
             }
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void DeleteButton_Click(object sender, EventArgs e)
         {
 
         }
