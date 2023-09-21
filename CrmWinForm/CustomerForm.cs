@@ -33,8 +33,7 @@ namespace CrmWinForm
 
         private void button1_Click(object sender, EventArgs e)
         {
-            var c = Customer ?? new Customer();
-
+            Customer = Customer ?? new Customer();
             Customer.Name = textBox1.Text;
 
             Close();
