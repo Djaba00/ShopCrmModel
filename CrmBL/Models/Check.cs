@@ -18,6 +18,7 @@ namespace CrmBL.Models
         public virtual Seller Seller { get; set; }
 
         public virtual ICollection<Sell> Sells { get; set; }
+        public decimal Price { get; set; }
 
         public override string ToString()
         {

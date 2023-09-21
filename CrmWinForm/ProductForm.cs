@@ -35,11 +35,11 @@ namespace CrmWinForm
 
         private void button1_Click(object sender, EventArgs e)
         {
-            var p = Product ?? new Product();
+            Product = Product ?? new Product();
 
-            p.Name = textBox1.Text;
-            p.Price = numericUpDown1.Value;
-            p.Count = Convert.ToInt32(numericUpDown2.Value);
+            Product.Name = textBox1.Text;
+            Product.Price = numericUpDown1.Value;
+            Product.Count = Convert.ToInt32(numericUpDown2.Value);
 
             Close();
         }

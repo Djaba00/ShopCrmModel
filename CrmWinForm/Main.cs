@@ -66,11 +66,17 @@ namespace CrmWinForm
         private void ProductAddToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             var form = new ProductForm();
-            if (form.ShowDialog() == DialogResult.OK )
+            if (form.ShowDialog() == DialogResult.OK)
             {
                 db.Products.Add(form.Product);
                 db.SaveChanges();
             }
+        }
+
+        private void ModelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var modelForm = new ModelForm();
+            modelForm.Show();
         }
     }
 }
