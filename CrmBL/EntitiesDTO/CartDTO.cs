@@ -5,21 +5,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CrmBL.Models
+namespace ShopCRM.DAL.Entities
 {
-    public class Cart : IEnumerable
+    public class CartDTO : IEnumerable
     {
-        public Customer Customer { get; set; }
-        public Dictionary<Product, int> Products { get; private set; }
+        public CustomerDTO Customer { get; set; }
+        public Dictionary<ProductDTO, int> Products { get; private set; }
         public decimal Price => GetAll().Sum(p => p.Price);
 
-        public Cart(Customer customer)
+        public CartDTO(CustomerDTO customer)
         {
             Customer = customer;
-            Products = new Dictionary<Product, int>();
+            Products = new Dictionary<ProductDTO, int>();
         }
 
-        public void Add(Product product)
+        public void Add(ProductDTO product)
         {
             if (Products.TryGetValue(product, out int count))
             {
@@ -42,11 +42,11 @@ namespace CrmBL.Models
             }
         }
 
-        public List<Product> GetAll()
+        public List<ProductDTO> GetAll()
         {
-            var result = new List<Product>();
+            var result = new List<ProductDTO>();
 
-            foreach (Product item in this)
+            foreach (ProductDTO item in this)
             {
                 result.Add(item);
             }

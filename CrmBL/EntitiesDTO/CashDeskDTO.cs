@@ -1,4 +1,4 @@
-﻿using CrmBL.DataAccess.ApplicationContext;
+﻿using ShopCRM.DAL.ApplicationContext;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,33 +6,33 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
 
-namespace CrmBL.Models
+namespace ShopCRM.DAL.Entities
 {
-    public class CashDesk
+    public class CashDeskDTO
     {
         CrmContext db = new CrmContext();
 
         public int Number { get; set; }
-        public Seller Seller { get; set; }
-        public Queue<Cart> Queue { get; set; }
+        public SellerDTO Seller { get; set; }
+        public Queue<CartDTO> Queue { get; set; }
         public int MaxQueueLenght { get; set; }
         public int ExitCustomer { get; set; }
         public bool IsModel { get; set; }
         public int Count => Queue.Count;
 
-        public event EventHandler<Check> CheckClosed;
+        public event EventHandler<CheckDTO> CheckClosed;
 
-        public CashDesk(int number, Seller seller, CrmContext db)
+        public CashDeskDTO(int number, SellerDTO seller, CrmContext db)
         {
             Number = number;
             Seller = seller;
-            Queue = new Queue<Cart>();
+            Queue = new Queue<CartDTO>();
             IsModel = true;
             MaxQueueLenght = 100;
             this.db = db ?? new CrmContext();
         }
 
-        public void Enqueue(Cart cart)
+        public void Enqueue(CartDTO cart)
         {
             if (Queue.Count <= MaxQueueLenght)
             {
@@ -56,7 +56,7 @@ namespace CrmBL.Models
 
             if (cart != null)
             {
-                var check = new Check()
+                var check = new CheckDTO()
                 {
                     SellerId = Seller.SellerId,
                     Seller = Seller,
@@ -75,13 +75,13 @@ namespace CrmBL.Models
                     check.CheckId = 0;
                 }
 
-                var sells = new List<Sell>();
+                var sells = new List<SellDTO>();
 
-                foreach (Product product in cart)
+                foreach (ProductDTO product in cart)
                 {
                     if (product.Count > 0)
                     {
-                        var sell = new Sell()
+                        var sell = new SellDTO()
                         {
                             CheckId = check.CheckId,
                             Check = check,

@@ -4,16 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CrmBL.Models
+namespace ShopCRM.DAL.Entities
 {
-    public class Sell
+    public class SellDTO
     {
-        public int Id { get; set; }
+        public int SellId { get; set; }
 
         public int ProductId { get; set; }
-        public virtual Product Product { get; set; }
+        public virtual ProductDTO Product { get; set; }
 
         public int CheckId { get; set; }
-        public virtual Check Check { get; set; }
+        public virtual CheckDTO Check { get; set; }
     }
 }

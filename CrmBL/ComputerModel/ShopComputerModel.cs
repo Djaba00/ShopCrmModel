@@ -1,4 +1,5 @@
-﻿using CrmBL.Helpers;
+﻿using ShopCRM.Helpers;
+using ShopCRM.DAL.Entities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -6,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CrmBL.Models
+namespace ShopCRM.BLL.ComputerModel
 {
     public class ShopComputerModel
     {
@@ -17,11 +18,11 @@ namespace CrmBL.Models
         CancellationTokenSource CancellationTokenSource;
         CancellationToken CancellationToken;
 
-        public List<CashDesk> CashDesks { get; set; } = new List<CashDesk>();
-        public List<Cart> Carts { get; set; } = new List<Cart>();
-        public List<Check> Checks { get; set; } = new List<Check>();
-        public List<Sell> Sells { get; set; } = new List<Sell>();
-        public Queue<Seller> Sellers { get; set; } = new Queue<Seller>();
+        public List<CashDeskDTO> CashDesks { get; set; } = new List<CashDeskDTO>();
+        public List<CartDTO> Carts { get; set; } = new List<CartDTO>();
+        public List<CheckDTO> Checks { get; set; } = new List<CheckDTO>();
+        public List<SellDTO> Sells { get; set; } = new List<SellDTO>();
+        public Queue<SellerDTO> Sellers { get; set; } = new Queue<SellerDTO>();
 
         public int CustomerSpeed { get; set; } = 1000;
         public int CashDeskSpeed { get; set; } = 1000;
@@ -42,7 +43,7 @@ namespace CrmBL.Models
 
             for (int i = 0; i < 3; i++)
             {
-                CashDesks.Add(new CashDesk(CashDesks.Count, Sellers.Dequeue(), null));
+                CashDesks.Add(new CashDeskDTO(CashDesks.Count, Sellers.Dequeue(), null));
             }
             
         }
@@ -63,7 +64,7 @@ namespace CrmBL.Models
             CancellationTokenSource.Cancel();
         }
 
-        private void CashDeskWork(CashDesk cashDesk, CancellationToken ct)
+        private void CashDeskWork(CashDeskDTO cashDesk, CancellationToken ct)
         {
             
             while(!ct.IsCancellationRequested

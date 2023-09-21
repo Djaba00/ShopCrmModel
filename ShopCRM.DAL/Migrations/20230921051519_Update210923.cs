@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace CrmBL.Migrations
+namespace ShopCRM.Migrations
 {
     /// <inheritdoc />
     public partial class Update210923 : Migration

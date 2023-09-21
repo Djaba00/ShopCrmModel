@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 
-namespace CrmBL.Models
+namespace ShopCRM.DAL.Entities
 {
-    public class Customer
+    public class CustomerDTO
     {
         public int CustomerId { get; set; }
         public string Name { get; set; }
-        public virtual ICollection<Check> Checks { get; set; }
+        public virtual ICollection<CheckDTO> Checks { get; set; }
 
         public override string ToString()
         {

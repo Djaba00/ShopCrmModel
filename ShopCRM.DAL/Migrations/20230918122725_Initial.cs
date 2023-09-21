@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace CrmBL.Migrations
+namespace ShopCRM.Migrations
 {
     /// <inheritdoc />
     public partial class Initial : Migration

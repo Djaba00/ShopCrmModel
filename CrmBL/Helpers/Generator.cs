@@ -4,9 +4,9 @@ using System.Linq;
 using System.Runtime.Serialization.Formatters;
 using System.Text;
 using System.Threading.Tasks;
-using CrmBL.Models;
+using ShopCRM.Models;
 
-namespace CrmBL.Helpers
+namespace ShopCRM.Helpers
 {
     public class Generator
     {

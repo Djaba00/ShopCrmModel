@@ -1,4 +1,4 @@
-﻿using CrmBL.Models;
+﻿using ShopCRM.DAL.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CrmBL.DataAccess.ApplicationContext
+namespace ShopCRM.DAL.ApplicationContext
 {
     public class CrmContext : DbContext
     {
@@ -27,6 +27,5 @@ namespace CrmBL.DataAccess.ApplicationContext
         public DbSet<Product> Products { get; set; }
         public DbSet<Sell> Sells { get; set; }
         public DbSet<Seller> Sellers { get; set; }
-
     }
 }

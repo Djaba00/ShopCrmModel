@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CrmBL.Models
+namespace ShopCRM.DAL.Entities
 {
-    public class Seller
+    public class SellerDTO
     {
         public int SellerId { get; set; }
         public string Name { get; set; }
-        public virtual ICollection<Check> Checks { get; set; }
+        public virtual ICollection<CheckDTO> Checks { get; set; }
 
         public override string ToString()
         {
