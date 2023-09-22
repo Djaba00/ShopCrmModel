@@ -1,27 +1,29 @@
-using CrmBL.DataAccess;
-using CrmBL.DataAccess.ApplicationContext;
-using CrmBL.Models;
+using AutoMapper;
+using CrmWinForm.VIewModels;
+using ShopCRM.BLL.BusinesModels;
+using ShopCRM.DAL.Entities;
+using ShopCRM.DAL.Interfaces;
 using System.Diagnostics;
+using static System.ComponentModel.Design.ObjectSelectorEditor;
 
 namespace CrmWinForm
 {
     public partial class Main : Form
     {
-        CrmContext db;
+        IServiceUnitOfWork services;
+        IMapper mapper;
+        Random rnd = new Random();
         Cart Cart;
-        Customer Customer;
+        CustomerViewModel Customer;
         CashDesk CashDesk;
 
-        public Main()
+        public Main(IServiceUnitOfWork service, IMapper mapper)
         {
             InitializeComponent();
-            db = new CrmContext();
+            this.services = service;
+            var customerDto = mapper.Map<CustomerDTO>(Customer);
 
-            Cart = new Cart(Customer);
-            CashDesk = new CashDesk(1, db.Sellers.FirstOrDefault(), db)
-            {
-                IsModel = false
-            };
+            Cart = new Cart(customerDto); 
         }
 
         private void Main_Load(object sender, EventArgs e)
@@ -33,30 +35,36 @@ namespace CrmWinForm
                     ProductList.Items.AddRange(db.Products.ToArray());
                     UpdateLists();
                 });
+                var seller = await services.SellsDTO.GetAsync(rnd.Next(0, 3));
+
+                CashDesk = new CashDesk(1, seller , services, mapper)
+                {
+                    IsModel = false
+                };
             });
         }
 
         private void ProductToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var catalogProduct = new Catalog<Product>(db.Products, db);
+            var catalogProduct = new Catalog<ProductDTO>(db.Products, db);
             catalogProduct.Show();
         }
 
         private void SellerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var catalogSeller = new Catalog<Seller>(db.Sellers, db);
+            var catalogSeller = new Catalog<SellerDTO>(db.Sellers, db);
             catalogSeller.Show();
         }
 
         private void CustomerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var catalogCustomer = new Catalog<Customer>(db.Customers, db);
+            var catalogCustomer = new Catalog<CustomerDTO>(db.Customers, db);
             catalogCustomer.Show();
         }
 
         private void CheckToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var catalogCheck = new Catalog<Check>(db.Checks, db);
+            var catalogCheck = new Catalog<CheckDTO>(db.Checks, db);
             catalogCheck.Show();
         }
 

@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ShopCRM.DAL.Entities;
+using ShopCRM.BLL.BusinesModels;
 
 namespace CrmBL.Models.Tests
 {
@@ -15,13 +17,13 @@ namespace CrmBL.Models.Tests
         public void CartTest()
         {
             // arrange
-            var customer = new Customer()
+            var customer = new CustomerDTO()
             {
                 CustomerId = 1,
                 Name = "Tester"
             };
 
-            var product1 = new Product()
+            var product1 = new ProductDTO()
             {
                 ProductId = 1,
                 Name = "pr1",
@@ -29,7 +31,7 @@ namespace CrmBL.Models.Tests
                 Count = 10
             };
 
-            var product2 = new Product()
+            var product2 = new ProductDTO()
             {
                 ProductId = 2,
                 Name = "pr2",
@@ -39,7 +41,7 @@ namespace CrmBL.Models.Tests
 
             var cart = new Cart(customer);
 
-            var expectedResult = new List<Product>()
+            var expectedResult = new List<ProductDTO>()
             {
                 product1, product1, product2
             };

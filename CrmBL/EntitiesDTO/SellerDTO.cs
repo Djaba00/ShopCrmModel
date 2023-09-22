@@ -11,10 +11,5 @@ namespace ShopCRM.DAL.Entities
         public int SellerId { get; set; }
         public string Name { get; set; }
         public virtual ICollection<CheckDTO> Checks { get; set; }
-
-        public override string ToString()
-        {
-            return Name;
-        }
     }
 }

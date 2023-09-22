@@ -5,36 +5,52 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ShopCRM.DAL.Entities;
+using ShopCRM.BLL.BusinesModels;
+using AutoMapper;
+using ShopCRM.BLL.Configurations;
 
 namespace CrmBL.Models.Tests
 {
     [TestClass()]
     public class CashDeskTests
     {
+        IMapper mapper;
+
+        public CashDeskTests()
+        {
+            var mapperConfig = new MapperConfiguration((v) =>
+            {
+                v.AddProfile(new MappingProfile());
+            });
+
+            IMapper mapper = mapperConfig.CreateMapper();
+        }
+
         [TestMethod()]
-        public void CashDeskTest()
+        public async void CashDeskTest()
         {
             // Arrange
 
-            var customer1 = new Customer()
+            var customer1 = new CustomerDTO()
             {
                 CustomerId = 1,
                 Name = "Tester1"
             };
 
-            var customer2 = new Customer()
+            var customer2 = new CustomerDTO()
             {
                 CustomerId = 2,
                 Name = "Tester2"
             };
 
-            var seller = new Seller()
+            var seller = new SellerDTO()
             {
                 SellerId = 1,
                 Name = "Seller1"
             };
 
-            var product1 = new Product()
+            var product1 = new ProductDTO()
             {
                 ProductId = 1,
                 Name = "pr1",
@@ -42,7 +58,7 @@ namespace CrmBL.Models.Tests
                 Count = 10
             };
 
-            var product2 = new Product()
+            var product2 = new ProductDTO()
             {
                 ProductId = 2,
                 Name = "pr2",
@@ -60,7 +76,7 @@ namespace CrmBL.Models.Tests
             cart2.Add(product1);
             cart2.Add(product2);
 
-            var cashDesk = new CashDesk(1, seller, null)
+            var cashDesk = new CashDesk(1, seller, null, mapper)
             {
                 MaxQueueLenght = 10
             };
@@ -73,9 +89,9 @@ namespace CrmBL.Models.Tests
 
             // Act
 
-            var cart1ActualResult = cashDesk.Dequeue();
+            var cart1ActualResult = await cashDesk.Dequeue();
 
-            var cart2ActualResult = cashDesk.Dequeue();
+            var cart2ActualResult = await cashDesk.Dequeue();
 
             // Assert
 

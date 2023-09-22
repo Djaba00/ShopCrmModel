@@ -1,6 +1,6 @@
 ﻿using ShopCRM.DAL.ApplicationContext;
 using ShopCRM.DAL.Entities;
-using ShopCRM.DAL.Repositories.Interfaces;
+using ShopCRM.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ShopCRM.DAL.Repositories
 {
-    public class UnitOfWork : IUnitOfWork
+    public class ContextUnitOfWork : IContextUnitOfWork
     {
         CrmContext db;
         CheckRepository CheckRepository;
@@ -20,9 +20,9 @@ namespace ShopCRM.DAL.Repositories
 
         private bool disposed = false;
 
-        public UnitOfWork(CrmContext db)
+        public ContextUnitOfWork()
         {
-            this.db = db;
+            db = new CrmContext();
         }
 
         public IRepository<Check> Checks

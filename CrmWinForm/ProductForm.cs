@@ -1,4 +1,5 @@
 ﻿using CrmBL.Models;
+using ShopCRM.DAL.Entities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,13 +15,13 @@ namespace CrmWinForm
 {
     public partial class ProductForm : Form
     {
-        public Product Product { get; set; }
+        public ProductDTO Product { get; set; }
         public ProductForm()
         {
             InitializeComponent();
         }
 
-        public ProductForm(Product product) : this()
+        public ProductForm(ProductDTO product) : this()
         {
             Product = product;
             textBox1.Text = product.Name;
@@ -35,7 +36,7 @@ namespace CrmWinForm
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Product = Product ?? new Product();
+            Product = Product ?? new ProductDTO();
 
             Product.Name = textBox1.Text;
             Product.Price = numericUpDown1.Value;

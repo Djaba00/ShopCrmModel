@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ShopCRM.DAL.ApplicationContext;
 using ShopCRM.DAL.Entities;
-using ShopCRM.DAL.Repositories.Interfaces;
+using ShopCRM.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;

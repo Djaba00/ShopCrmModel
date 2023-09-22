@@ -4,16 +4,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ShopCRM.DAL.Entities;
 
-namespace ShopCRM.DAL.Entities
+namespace ShopCRM.BLL.BusinesModels
 {
-    public class CartDTO : IEnumerable
+    public class Cart : IEnumerable
     {
         public CustomerDTO Customer { get; set; }
         public Dictionary<ProductDTO, int> Products { get; private set; }
-        public decimal Price => GetAll().Sum(p => p.Price);
+        //public decimal Price => GetAll().Sum(p => p.Price);
 
-        public CartDTO(CustomerDTO customer)
+        public Cart(CustomerDTO customer)
         {
             Customer = customer;
             Products = new Dictionary<ProductDTO, int>();
@@ -35,7 +36,7 @@ namespace ShopCRM.DAL.Entities
         {
             foreach (var product in Products.Keys)
             {
-                for(int i = 0; i < Products[product]; i++)
+                for (int i = 0; i < Products[product]; i++)
                 {
                     yield return product;
                 }

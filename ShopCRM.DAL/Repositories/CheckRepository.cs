@@ -1,17 +1,19 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ShopCRM.DAL.ApplicationContext;
 using ShopCRM.DAL.Entities;
-using ShopCRM.DAL.Repositories.Interfaces;
+using ShopCRM.DAL.Interfaces;
 
 namespace ShopCRM.DAL.Repositories
 {
     public  class CheckRepository : IRepository<Check>
     {
         CrmContext db;
+        List<Check> checks;
 
         public CheckRepository(CrmContext db)
         {
             this.db = db;
+            checks = db.Checks.ToList();
         }
 
         public async Task<IEnumerable<Check>> GetAllAsync()

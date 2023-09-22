@@ -1,5 +1,5 @@
 ﻿using CrmBL.Models;
-using CrmWinForm.ViewModels;
+using CrmWinForm.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

@@ -6,11 +6,14 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ShopCRM.BLL.BusinesModels;
+using AutoMapper;
 
 namespace ShopCRM.BLL.ComputerModel
 {
     public class ShopComputerModel
     {
+        IMapper mapper;
         Generator Generator = new Generator();
         Random rnd = new Random();
         bool isWorking = false;
@@ -18,8 +21,8 @@ namespace ShopCRM.BLL.ComputerModel
         CancellationTokenSource CancellationTokenSource;
         CancellationToken CancellationToken;
 
-        public List<CashDeskDTO> CashDesks { get; set; } = new List<CashDeskDTO>();
-        public List<CartDTO> Carts { get; set; } = new List<CartDTO>();
+        public List<CashDesk> CashDesks { get; set; } = new List<CashDesk>();
+        public List<Cart> Carts { get; set; } = new List<Cart>();
         public List<CheckDTO> Checks { get; set; } = new List<CheckDTO>();
         public List<SellDTO> Sells { get; set; } = new List<SellDTO>();
         public Queue<SellerDTO> Sellers { get; set; } = new Queue<SellerDTO>();
@@ -27,8 +30,9 @@ namespace ShopCRM.BLL.ComputerModel
         public int CustomerSpeed { get; set; } = 1000;
         public int CashDeskSpeed { get; set; } = 1000;
 
-        public ShopComputerModel()
+        public ShopComputerModel(IMapper mapper)
         {
+            this.mapper = mapper;
             CancellationTokenSource = new CancellationTokenSource();
             CancellationToken = CancellationTokenSource.Token;
 
@@ -43,7 +47,7 @@ namespace ShopCRM.BLL.ComputerModel
 
             for (int i = 0; i < 3; i++)
             {
-                CashDesks.Add(new CashDeskDTO(CashDesks.Count, Sellers.Dequeue(), null));
+                CashDesks.Add(new CashDesk(CashDesks.Count, Sellers.Dequeue(), null, mapper));
             }
             
         }
@@ -64,7 +68,7 @@ namespace ShopCRM.BLL.ComputerModel
             CancellationTokenSource.Cancel();
         }
 
-        private void CashDeskWork(CashDeskDTO cashDesk, CancellationToken ct)
+        private void CashDeskWork(CashDesk cashDesk, CancellationToken ct)
         {
             
             while(!ct.IsCancellationRequested

@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShopCRM.DAL.Repositories.Interfaces
+namespace ShopCRM.DAL.Interfaces
 {
-    public interface IUnitOfWork : IDisposable
+    public interface IContextUnitOfWork : IDisposable
     {
         IRepository<Check> Checks { get; }
         IRepository<Customer> Customers { get; }

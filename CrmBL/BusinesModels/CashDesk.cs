@@ -1,20 +1,20 @@
-﻿using ShopCRM.DAL.ApplicationContext;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Threading.Tasks.Dataflow;
+﻿using AutoMapper;
+using ShopCRM.BLL.Services;
+using ShopCRM.DAL.ApplicationContext;
+using ShopCRM.DAL.Entities;
+using ShopCRM.DAL.Interfaces;
+using ShopCRM.DAL.Repositories;
 
-namespace ShopCRM.DAL.Entities
+namespace ShopCRM.BLL.BusinesModels
 {
-    public class CashDeskDTO
+    public class CashDesk
     {
-        CrmContext db = new CrmContext();
+        public IServiceUnitOfWork db { get; }
+        public IMapper mapper { get; set; }
 
         public int Number { get; set; }
         public SellerDTO Seller { get; set; }
-        public Queue<CartDTO> Queue { get; set; }
+        public Queue<Cart> Queue { get; set; }
         public int MaxQueueLenght { get; set; }
         public int ExitCustomer { get; set; }
         public bool IsModel { get; set; }
@@ -22,17 +22,18 @@ namespace ShopCRM.DAL.Entities
 
         public event EventHandler<CheckDTO> CheckClosed;
 
-        public CashDeskDTO(int number, SellerDTO seller, CrmContext db)
+        public CashDesk(int number, SellerDTO seller, IServiceUnitOfWork db, IMapper mapper)
         {
             Number = number;
             Seller = seller;
-            Queue = new Queue<CartDTO>();
+            Queue = new Queue<Cart>();
             IsModel = true;
             MaxQueueLenght = 100;
-            this.db = db ?? new CrmContext();
+            this.mapper = mapper;
+            this.db = db ?? new ServiceUnitOfWork(new ContextUnitOfWork(), mapper);
         }
 
-        public void Enqueue(CartDTO cart)
+        public void Enqueue(Cart cart)
         {
             if (Queue.Count <= MaxQueueLenght)
             {
@@ -44,10 +45,10 @@ namespace ShopCRM.DAL.Entities
             }
         }
 
-        public decimal Dequeue()
+        public async Task<decimal> Dequeue()
         {
             decimal summary = 0;
-            if(Queue.Count == 0)
+            if (Queue.Count == 0)
             {
                 return 0;
             }
@@ -67,8 +68,7 @@ namespace ShopCRM.DAL.Entities
 
                 if (!IsModel)
                 {
-                    db.Checks.Add(check);
-                    db.SaveChanges();
+                    await db.ChecksDTO.CreateAsync(check);
                 }
                 else
                 {
@@ -93,19 +93,19 @@ namespace ShopCRM.DAL.Entities
 
                         if (!IsModel)
                         {
-                            db.Sells.Add(sell);
+                            db.SellsDTO.CreateAsync(sell);
                         }
 
                         product.Count--;
                         summary += product.Price;
-                    }  
+                    }
                 }
 
                 check.Price = summary;
 
                 if (!IsModel)
                 {
-                    db.SaveChanges();
+                    db.ChecksDTO.UpdateAsync(check);
                 }
 
                 CheckClosed?.Invoke(this, check);

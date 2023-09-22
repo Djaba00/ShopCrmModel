@@ -1,10 +1,11 @@
-﻿using System;
+﻿using ShopCRM.BLL.BusinesModels;
+using ShopCRM.DAL.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization.Formatters;
 using System.Text;
 using System.Threading.Tasks;
-using ShopCRM.Models;
 
 namespace ShopCRM.Helpers
 {
@@ -13,17 +14,17 @@ namespace ShopCRM.Helpers
         Random rnd = new Random();
 
         public List<CashDesk> CashDesks { get; set; } = new List<CashDesk>();
-        public List<Customer> Customers { get; set; } = new List<Customer>();
-        public List<Product> Products { get; set; } = new List<Product>();
-        public List<Seller> Sellers { get; set; } = new List<Seller> { };
+        public List<CustomerDTO> Customers { get; set; } = new List<CustomerDTO>();
+        public List<ProductDTO> Products { get; set; } = new List<ProductDTO>();
+        public List<SellerDTO> Sellers { get; set; } = new List<SellerDTO> { };
 
-        public List<Customer> CreateNewCustomers(int count)
+        public List<CustomerDTO> CreateNewCustomers(int count)
         {
-            var result = new List<Customer>();
+            var result = new List<CustomerDTO>();
 
             for(int i = 0; i < count; i++)
             {
-                var customer = new Customer()
+                var customer = new CustomerDTO()
                 {
                     CustomerId = Customers.Count,
                     Name = GetRandomText(),
@@ -35,13 +36,13 @@ namespace ShopCRM.Helpers
             return result;
         }
 
-        public List<Seller> CreateNewSellers(int count)
+        public List<SellerDTO> CreateNewSellers(int count)
         {
-            var result = new List<Seller>();
+            var result = new List<SellerDTO>();
 
             for (int i = 0; i < count; i++)
             {
-                var seller = new Seller()
+                var seller = new SellerDTO()
                 {
                     SellerId = Customers.Count,
                     Name = GetRandomText(),
@@ -53,13 +54,13 @@ namespace ShopCRM.Helpers
             return result;
         }
 
-        public List<Product> CreateNewProducts(int count)
+        public List<ProductDTO> CreateNewProducts(int count)
         {
-            var result = new List<Product>();
+            var result = new List<ProductDTO>();
 
             for (int i = 0; i < count; i++)
             {
-                var product = new Product()
+                var product = new ProductDTO()
                 {
                     ProductId = Customers.Count,
                     Name = GetRandomText(),
@@ -73,9 +74,9 @@ namespace ShopCRM.Helpers
             return result;
         }
 
-        public List<Product> GetRandomProduct(int min, int max)
+        public List<ProductDTO> GetRandomProduct(int min, int max)
         {
-            var result = new List<Product>();
+            var result = new List<ProductDTO>();
 
             var count = rnd.Next(min, max);
             for (int i = 0; i < count; i++)
