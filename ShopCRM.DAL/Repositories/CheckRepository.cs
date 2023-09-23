@@ -8,27 +8,25 @@ namespace ShopCRM.DAL.Repositories
     public  class CheckRepository : IRepository<Check>
     {
         CrmContext db;
-        List<Check> checks;
 
-        public CheckRepository(CrmContext db)
+        public CheckRepository()
         {
-            this.db = db;
-            checks = db.Checks.ToList();
+            db = new CrmContext();
         }
 
         public async Task<IEnumerable<Check>> GetAllAsync()
         {
-            return await db.Checks.ToListAsync();
+            return await db.Checks.AsNoTracking().AsNoTracking().ToListAsync();
         }
 
         public async Task<Check?> GetAsync(int id)
         {
-            return await db.Checks.FirstOrDefaultAsync(c => c.CheckId == id);
+            return await db.Checks.AsNoTracking().FirstOrDefaultAsync(c => c.CheckId == id);
         }
 
         public async Task UpdateAsync(Check item)
         {
-            var check = await GetAsync(item.SellerId);
+            var check = await GetAsync(item.CheckId);
 
             db.Checks.Entry(check).State = EntityState.Detached;
 
@@ -36,11 +34,14 @@ namespace ShopCRM.DAL.Repositories
             check.Price = item.Price;
 
             db.Checks.Update(check);
+
+            await db.SaveChangesAsync();
         }
 
         public async Task<Check?> CreateAsync(Check item)
         {
             var result = await db.Checks.AddAsync(item);
+            await db.SaveChangesAsync();
             return result.Entity;
         }
 
@@ -48,6 +49,7 @@ namespace ShopCRM.DAL.Repositories
         {
             var entryItem = await db.Checks.FirstOrDefaultAsync(c => c.CheckId == id);
             db.Checks.Entry(entryItem).State = EntityState.Deleted;
+            await db.SaveChangesAsync();
         }
     }
 }

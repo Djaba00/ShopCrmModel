@@ -3,6 +3,7 @@ using ShopCRM.BLL.DTO;
 using ShopCRM.BLL.Interfaces;
 using ShopCRM.DAL.Entities;
 using ShopCRM.DAL.Interfaces;
+using ShopCRM.DAL.Repositories;
 
 namespace ShopCRM.BLL.Services
 {
@@ -13,7 +14,7 @@ namespace ShopCRM.BLL.Services
 
         public SellerService(IContextUnitOfWork db, IMapper mapper)
         {
-            this.db = db;
+            this.db = db ?? new ContextUnitOfWork();
             this.mapper = mapper;
         }
 

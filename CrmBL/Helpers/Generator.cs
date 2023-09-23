@@ -1,6 +1,10 @@
-﻿using ShopCRM.BLL.BusinesModels;
+﻿using AutoMapper;
+using ShopCRM.BLL.BusinesModels;
 using ShopCRM.BLL.DTO;
+using ShopCRM.BLL.Interfaces;
+using ShopCRM.BLL.Services;
 using ShopCRM.DAL.Entities;
+using ShopCRM.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,12 +16,19 @@ namespace ShopCRM.Helpers
 {
     public class Generator
     {
+        IMapper mapper;
+
         Random rnd = new Random();
 
         public List<CashDesk> CashDesks { get; set; } = new List<CashDesk>();
         public List<CustomerDTO> Customers { get; set; } = new List<CustomerDTO>();
         public List<ProductDTO> Products { get; set; } = new List<ProductDTO>();
-        public List<SellerDTO> Sellers { get; set; } = new List<SellerDTO> { };
+        public List<SellerService> Sellers { get; set; } = new List<SellerService> { };
+
+        public Generator(IMapper mapper)
+        {
+            this.mapper = mapper;
+        }
 
         public List<CustomerDTO> CreateNewCustomers(int count)
         {
@@ -37,17 +48,13 @@ namespace ShopCRM.Helpers
             return result;
         }
 
-        public List<SellerDTO> CreateNewSellers(int count)
+        public List<SellerService> CreateNewSellers(int count)
         {
-            var result = new List<SellerDTO>();
+            var result = new List<SellerService>();
 
             for (int i = 0; i < count; i++)
             {
-                var seller = new SellerDTO()
-                {
-                    SellerId = Customers.Count,
-                    Name = GetRandomText(),
-                };
+                var seller = new SellerService(null, mapper);
                 Sellers.Add(seller);
                 result.Add(seller);
             }

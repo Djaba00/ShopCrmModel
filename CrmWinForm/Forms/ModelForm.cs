@@ -27,15 +27,15 @@ namespace CrmWinForm
         {
             var cashBoxes = new List<CashBoxView>();
 
-            //for (int i = 0; i < model.CashDesks.Count; i++)
-            //{
-            //    var box = new CashBoxView(model.CashDesks[i], i, 10, 26 * i);
-            //    cashBoxes.Add(box);
-            //    Controls.Add(box.CashDeskName);
-            //    Controls.Add(box.Price);
-            //    Controls.Add(box.QueueLenght);
-            //    Controls.Add(box.LeaveCustomersCount);
-            //}
+            for (int i = 0; i < model.CashDesks.Count; i++)
+            {
+                var box = new CashBoxView(model.CashDesks[i], i, 10, 26 * i);
+                cashBoxes.Add(box);
+                Controls.Add(box.CashDeskName);
+                Controls.Add(box.Price);
+                Controls.Add(box.QueueLenght);
+                Controls.Add(box.LeaveCustomersCount);
+            }
 
             model.Start();
         }

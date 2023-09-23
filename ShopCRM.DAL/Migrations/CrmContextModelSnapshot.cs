@@ -8,7 +8,7 @@ using ShopCRM.DAL.ApplicationContext;
 
 #nullable disable
 
-namespace ShopCRM.Migrations
+namespace ShopCRM.DAL.Migrations
 {
     [DbContext(typeof(CrmContext))]
     partial class CrmContextModelSnapshot : ModelSnapshot
@@ -48,7 +48,7 @@ namespace ShopCRM.Migrations
 
                     b.HasIndex("SellerId");
 
-                    b.ToTable("Checks");
+                    b.ToTable("Checks", (string)null);
                 });
 
             modelBuilder.Entity("ShopCRM.DAL.Entities.Customer", b =>
@@ -65,7 +65,7 @@ namespace ShopCRM.Migrations
 
                     b.HasKey("CustomerId");
 
-                    b.ToTable("Customers");
+                    b.ToTable("Customers", (string)null);
                 });
 
             modelBuilder.Entity("ShopCRM.DAL.Entities.Product", b =>
@@ -89,7 +89,7 @@ namespace ShopCRM.Migrations
 
                     b.HasKey("ProductId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("ShopCRM.DAL.Entities.Sell", b =>
@@ -112,7 +112,7 @@ namespace ShopCRM.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Sells");
+                    b.ToTable("Sells", (string)null);
                 });
 
             modelBuilder.Entity("ShopCRM.DAL.Entities.Seller", b =>
@@ -129,7 +129,7 @@ namespace ShopCRM.Migrations
 
                     b.HasKey("SellerId");
 
-                    b.ToTable("Sellers");
+                    b.ToTable("Sellers", (string)null);
                 });
 
             modelBuilder.Entity("ShopCRM.DAL.Entities.Check", b =>

@@ -9,24 +9,26 @@ using System.Threading.Tasks;
 using ShopCRM.BLL.BusinesModels;
 using AutoMapper;
 using ShopCRM.BLL.DTO;
+using ShopCRM.BLL.Interfaces;
+using ShopCRM.BLL.Services;
 
 namespace ShopCRM.BLL.ComputerModel
 {
     public class ShopComputerModel
     {
         IMapper mapper;
-        Generator Generator = new Generator();
+        Generator Generator;
         Random rnd = new Random();
         bool isWorking = false;
         List<Task> Tasks = new List<Task>();
         CancellationTokenSource CancellationTokenSource;
         CancellationToken CancellationToken;
 
-        public List<CashDesk> CashDesks { get; set; } = new List<CashDesk>();
+        public List<CashDeskService> CashDesks { get; set; } = new List<CashDeskService>();
         public List<Cart> Carts { get; set; } = new List<Cart>();
         public List<CheckDTO> Checks { get; set; } = new List<CheckDTO>();
         public List<SellDTO> Sells { get; set; } = new List<SellDTO>();
-        public Queue<SellerDTO> Sellers { get; set; } = new Queue<SellerDTO>();
+        public Queue<ISellerService> Sellers { get; set; } = new Queue<ISellerService>();
 
         public int CustomerSpeed { get; set; } = 1000;
         public int CashDeskSpeed { get; set; } = 1000;
@@ -34,6 +36,7 @@ namespace ShopCRM.BLL.ComputerModel
         public ShopComputerModel(IMapper mapper)
         {
             this.mapper = mapper;
+            Generator = new Generator(mapper);
             CancellationTokenSource = new CancellationTokenSource();
             CancellationToken = CancellationTokenSource.Token;
 
@@ -48,7 +51,7 @@ namespace ShopCRM.BLL.ComputerModel
 
             for (int i = 0; i < 3; i++)
             {
-                //CashDesks.Add(new CashDesk(CashDesks.Count, Sellers.Dequeue(), null, mapper));
+                CashDesks.Add(new CashDeskService(Sellers.Dequeue(), null, mapper, CashDesks.Count));
             }
             
         }
@@ -69,15 +72,15 @@ namespace ShopCRM.BLL.ComputerModel
             CancellationTokenSource.Cancel();
         }
 
-        private void CashDeskWork(CashDesk cashDesk, CancellationToken ct)
+        private void CashDeskWork(CashDeskService cashDesk, CancellationToken ct)
         {
             
             while(!ct.IsCancellationRequested
                 )
             {
-                if (cashDesk.Count > 0)
+                if (cashDesk.CashDesk.Count > 0)
                 {
-                   // cashDesk.Dequeue();
+                    cashDesk.Dequeue();
                     Thread.Sleep(CashDeskSpeed);
                 }
             }
@@ -99,7 +102,7 @@ namespace ShopCRM.BLL.ComputerModel
                     }
 
                     var cash = CashDesks[rnd.Next(CashDesks.Count)];
-                    //cash.Enqueue(cart);                    
+                    cash.Enqueue(cart);                    
                 }
                 Thread.Sleep(CustomerSpeed);
             }

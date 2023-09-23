@@ -27,16 +27,15 @@ namespace ShopCRM.BLL.Services
         public CashDeskService(
             ISellerService sellerService, 
             IContextUnitOfWork db, 
-            IMapper mapper)
+            IMapper mapper, int number = 1)
         {
             this.mapper = mapper;
             this.db = db ?? new ContextUnitOfWork();
 
             Random rnd = new Random();
+            var sellers = sellerService.GetAllAsync().Result;
 
-            int number = rnd.Next(1, 10);
-
-            CashDesk = new CashDesk(number, sellerService.GetAllAsync().Result.FirstOrDefault())
+            CashDesk = new CashDesk(number, sellers.ElementAt(rnd.Next(sellers.Count())))
             {
                 IsModel = false
             };
@@ -68,9 +67,7 @@ namespace ShopCRM.BLL.Services
             {
                 var check = new CheckDTO()
                 {
-                    SellerId = CashDesk.Seller.SellerId,
                     Seller = CashDesk.Seller,
-                    CustomerId = cart.Customer.CustomerId,
                     Customer = cart.Customer,
                     Created = DateTime.Now
                 };
@@ -93,9 +90,7 @@ namespace ShopCRM.BLL.Services
                     {
                         var sell = new SellDTO()
                         {
-                            CheckId = check.CheckId,
                             Check = check,
-                            ProductId = product.ProductId,
                             Product = product
                         };
 

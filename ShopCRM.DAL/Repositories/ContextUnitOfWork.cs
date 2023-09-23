@@ -11,7 +11,6 @@ namespace ShopCRM.DAL.Repositories
 {
     public class ContextUnitOfWork : IContextUnitOfWork
     {
-        CrmContext db;
         CheckRepository CheckRepository;
         CustomerRepository CustomerRepository;
         ProductRepository ProductRepository;
@@ -22,7 +21,6 @@ namespace ShopCRM.DAL.Repositories
 
         public ContextUnitOfWork()
         {
-            db = new CrmContext();
         }
 
         public IRepository<Check> Checks
@@ -31,7 +29,7 @@ namespace ShopCRM.DAL.Repositories
             {
                 if (CheckRepository == null)
                 {
-                    CheckRepository = new CheckRepository(db);
+                    CheckRepository = new CheckRepository();
                 }
                 return CheckRepository;
             }
@@ -42,7 +40,7 @@ namespace ShopCRM.DAL.Repositories
             {
                 if (CustomerRepository == null)
                 {
-                    CustomerRepository = new CustomerRepository(db);
+                    CustomerRepository = new CustomerRepository();
                 }
                 return CustomerRepository;
             }
@@ -53,7 +51,7 @@ namespace ShopCRM.DAL.Repositories
             {
                 if (ProductRepository == null)
                 {
-                    ProductRepository = new ProductRepository(db);
+                    ProductRepository = new ProductRepository();
                 }
                 return ProductRepository;
             }
@@ -64,7 +62,7 @@ namespace ShopCRM.DAL.Repositories
             {
                 if (SellerRepository == null)
                 {
-                    SellerRepository = new SellerRepository(db);
+                    SellerRepository = new SellerRepository();
                 }
                 return SellerRepository;
             }
@@ -75,7 +73,7 @@ namespace ShopCRM.DAL.Repositories
             {
                 if (SellRepository == null)
                 {
-                    SellRepository = new SellRepository(db);
+                    SellRepository = new SellRepository();
                 }
                 return SellRepository;
             }
@@ -83,25 +81,25 @@ namespace ShopCRM.DAL.Repositories
 
         public async Task Save()
         {
-            await db.SaveChangesAsync();
+            //await db.SaveChangesAsync();
         }
 
         public void Dispose()
         {
-            Dispose(true);
-            GC.SuppressFinalize(this);
+            //Dispose(true);
+            //GC.SuppressFinalize(this);
         }
 
         public virtual void Dispose(bool disposing)
         {
-            if (!this.disposed)
-            {
-                if (disposing)
-                {
-                    db.Dispose();
-                }
-                this.disposed = true;
-            }
+            //if (!this.disposed)
+            //{
+            //    if (disposing)
+            //    {
+            //        db.Dispose();
+            //    }
+            //    this.disposed = true;
+            //}
         }
     }
 }

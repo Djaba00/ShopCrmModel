@@ -14,19 +14,19 @@ namespace ShopCRM.DAL.Repositories
     {
         CrmContext db;
 
-        public CustomerRepository(CrmContext db)
+        public CustomerRepository()
         {
-            this.db = db;
+            db = new CrmContext();
         }
 
         public async Task<IEnumerable<Customer>> GetAllAsync()
         {
-            return await db.Customers.ToListAsync();
+            return await db.Customers.AsNoTracking().ToListAsync();
         }
 
         public async Task<Customer?> GetAsync(int id)
         {
-            return await db.Customers.FirstOrDefaultAsync(c => c.CustomerId == id);
+            return await db.Customers.AsNoTracking().FirstOrDefaultAsync(c => c.CustomerId == id);
         }
 
         public async Task UpdateAsync(Customer item)
@@ -38,11 +38,14 @@ namespace ShopCRM.DAL.Repositories
             customer.Name = item.Name;
 
             db.Customers.Update(customer);
+
+            await db.SaveChangesAsync();
         }
 
         public async Task<Customer?> CreateAsync(Customer item)
         {
             var result = await db.Customers.AddAsync(item);
+            await db.SaveChangesAsync();
             return result.Entity;
         }
 
@@ -50,6 +53,7 @@ namespace ShopCRM.DAL.Repositories
         {
             var entryItem = await db.Customers.FirstOrDefaultAsync(c => c.CustomerId == id);
             db.Customers.Entry(entryItem).State = EntityState.Deleted;
+            await db.SaveChangesAsync();
         }
     }
 }

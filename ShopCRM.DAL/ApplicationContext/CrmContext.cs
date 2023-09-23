@@ -28,11 +28,36 @@ namespace ShopCRM.DAL.ApplicationContext
         {
             modelBuilder.Entity<Product>().Property(p => p.Price).HasPrecision(14, 2);
 
-            modelBuilder.Entity<Check>().HasKey(p => p.CheckId);
-            modelBuilder.Entity<Customer>().HasKey(p => p.CustomerId);
-            modelBuilder.Entity<Product>().HasKey(p => p.ProductId);
-            modelBuilder.Entity<Sell>().HasKey(p => p.SellId);
-            modelBuilder.Entity<Seller>().HasKey(p => p.SellerId);
+            modelBuilder.Entity<Check>()
+                .HasOne(c => c.Customer)
+                .WithMany(c => c.Checks)
+                .HasForeignKey(c => c.CustomerId);
+
+            modelBuilder.Entity<Check>()
+                .HasOne(c => c.Seller)
+                .WithMany(c => c.Checks)
+                .HasForeignKey(c => c.SellerId);
+
+            modelBuilder.Entity<Sell>()
+                .HasOne(c => c.Check)
+                .WithMany(c => c.Sells)
+                .HasForeignKey(c => c.CheckId);
+
+            modelBuilder.Entity<Sell>()
+                .HasOne(c => c.Product)
+                .WithMany(c => c.Sells)
+                .HasForeignKey(c => c.ProductId);
+
+            modelBuilder.Entity<Check>().HasKey(c => c.CheckId);
+
+            modelBuilder.Entity<Sell>().HasKey(c => c.SellId);
+
+            modelBuilder.Entity<Customer>().HasKey(c => c.CustomerId);
+
+            modelBuilder.Entity<Product>().HasKey(c => c.ProductId);
+
+            modelBuilder.Entity<Seller>().HasKey(c => c.SellerId);
+
         }
         
     }

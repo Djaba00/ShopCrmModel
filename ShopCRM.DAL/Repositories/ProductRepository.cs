@@ -14,19 +14,19 @@ namespace ShopCRM.DAL.Repositories
     {
         CrmContext db;
 
-        public ProductRepository(CrmContext db)
+        public ProductRepository()
         {
-            this.db = db;
+            db = new CrmContext();
         }
 
         public async Task<IEnumerable<Product>> GetAllAsync()
         {
-            return await db.Products.ToListAsync();
+            return await db.Products.AsNoTracking().ToListAsync();
         }
 
         public async Task<Product?> GetAsync(int id)
         {
-            return await db.Products.FirstOrDefaultAsync(c => c.ProductId == id);
+            return await db.Products.AsNoTracking().FirstOrDefaultAsync(c => c.ProductId == id);
         }
 
         public async Task UpdateAsync(Product item)
@@ -40,11 +40,13 @@ namespace ShopCRM.DAL.Repositories
             product.Count = item.Count;
 
             db.Products.Update(product);
+            await db.SaveChangesAsync();
         }
 
         public async Task<Product?> CreateAsync(Product item)
         {
             var result = await db.Products.AddAsync(item);
+            await db.SaveChangesAsync();
             return result.Entity;
         }
 
@@ -52,6 +54,7 @@ namespace ShopCRM.DAL.Repositories
         {
             var entryItem = await db.Products.FirstOrDefaultAsync(c => c.ProductId == id);
             db.Products.Entry(entryItem).State = EntityState.Deleted;
+            await db.SaveChangesAsync();
         }
     }
 }

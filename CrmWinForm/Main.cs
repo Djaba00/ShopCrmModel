@@ -97,7 +97,8 @@ namespace CrmWinForm
                 var productDto = mapper.Map<ProductDTO>(productVm);
 
                 Cart.Add(productDto);
-                UserCart.Items.Add(productDto);
+
+                UserCart.Items.Add(productVm);
                 UpdateLists();
             }
         }
@@ -105,7 +106,9 @@ namespace CrmWinForm
         private async void UpdateLists()
         {
             UserCart.Items.Clear();
-            UserCart.Items.AddRange(Cart.GetAll().ToArray());
+
+            var productsVm = Cart.GetAll().Select(c => mapper.Map<ProductViewModel>(c)).ToArray();
+            UserCart.Items.AddRange(productsVm);
 
             var price = Cart.GetPrice();
 

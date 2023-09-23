@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace ShopCRM.Migrations
+namespace ShopCRM.DAL.Migrations
 {
     /// <inheritdoc />
     public partial class Initial : Migration
@@ -60,7 +60,8 @@ namespace ShopCRM.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CustomerId = table.Column<int>(type: "int", nullable: false),
-                    SellerId = table.Column<int>(type: "int", nullable: false)
+                    SellerId = table.Column<int>(type: "int", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -83,14 +84,14 @@ namespace ShopCRM.Migrations
                 name: "Sells",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    SellId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ProductId = table.Column<int>(type: "int", nullable: false),
                     CheckId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Sells", x => x.Id);
+                    table.PrimaryKey("PK_Sells", x => x.SellId);
                     table.ForeignKey(
                         name: "FK_Sells_Checks_CheckId",
                         column: x => x.CheckId,
