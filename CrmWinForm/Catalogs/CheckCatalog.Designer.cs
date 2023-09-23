@@ -1,7 +1,6 @@
 ﻿namespace CrmWinForm
 {
-    partial class Catalog<T>
-        where T : class
+    partial class CheckCatalog
     {
         /// <summary>
         /// Required designer variable.
@@ -52,30 +51,30 @@
             this.dataGridView.Size = new System.Drawing.Size(776, 388);
             this.dataGridView.TabIndex = 0;
             // 
-            // button1
+            // AddButton
             // 
             this.AddButton.Location = new System.Drawing.Point(245, 415);
-            this.AddButton.Name = "button1";
+            this.AddButton.Name = "AddButton";
             this.AddButton.Size = new System.Drawing.Size(75, 23);
             this.AddButton.TabIndex = 1;
             this.AddButton.Text = "Добавить";
             this.AddButton.UseVisualStyleBackColor = true;
             this.AddButton.Click += new System.EventHandler(this.AddButton_Click);
             // 
-            // button2
+            // UpdateButton
             // 
             this.UpdateButton.Location = new System.Drawing.Point(356, 415);
-            this.UpdateButton.Name = "button2";
+            this.UpdateButton.Name = "UpdateButton";
             this.UpdateButton.Size = new System.Drawing.Size(75, 23);
             this.UpdateButton.TabIndex = 2;
             this.UpdateButton.Text = "Изменить";
             this.UpdateButton.UseVisualStyleBackColor = true;
             this.UpdateButton.Click += new System.EventHandler(this.UpdateButton_Click);
             // 
-            // button3
+            // DeleteButton
             // 
             this.DeleteButton.Location = new System.Drawing.Point(473, 415);
-            this.DeleteButton.Name = "button3";
+            this.DeleteButton.Name = "DeleteButton";
             this.DeleteButton.Size = new System.Drawing.Size(75, 23);
             this.DeleteButton.TabIndex = 3;
             this.DeleteButton.Text = "Удалить";

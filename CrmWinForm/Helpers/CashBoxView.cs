@@ -1,5 +1,6 @@
-﻿using CrmBL.Models;
+﻿using CrmWinForm.VIewModels;
 using ShopCRM.BLL.BusinesModels;
+using ShopCRM.BLL.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,7 +57,7 @@ namespace CrmWinForm.Helpers
             cashDesk.CheckClosed += CashDesk_CheckClosed;
         }
 
-        private void CashDesk_CheckClosed(object sender, Check e)
+        private void CashDesk_CheckClosed(object sender, CheckDTO e)
         {
             Price?.Invoke((Action)delegate
             {

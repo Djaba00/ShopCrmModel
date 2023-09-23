@@ -9,6 +9,7 @@ using ShopCRM.DAL.Entities;
 using ShopCRM.BLL.BusinesModels;
 using AutoMapper;
 using ShopCRM.BLL.Configurations;
+using ShopCRM.BLL.DTO;
 
 namespace CrmBL.Models.Tests
 {
@@ -21,7 +22,7 @@ namespace CrmBL.Models.Tests
         {
             var mapperConfig = new MapperConfiguration((v) =>
             {
-                v.AddProfile(new MappingProfile());
+                v.AddProfile(new MappingProfileBLL());
             });
 
             IMapper mapper = mapperConfig.CreateMapper();

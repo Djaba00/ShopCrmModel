@@ -31,13 +31,12 @@
             menuStrip1 = new MenuStrip();
             entitiesToolStripMenuItem = new ToolStripMenuItem();
             productToolStripMenuItem = new ToolStripMenuItem();
-            productAddToolStripMenuItem1 = new ToolStripMenuItem();
             sellerToolStripMenuItem = new ToolStripMenuItem();
-            sellerAddToolStripMenuItem = new ToolStripMenuItem();
             customerToolStripMenuItem = new ToolStripMenuItem();
-            customerAddToolStripMenuItem2 = new ToolStripMenuItem();
             checkToolStripMenuItem = new ToolStripMenuItem();
             ModelToolStripMenuItem = new ToolStripMenuItem();
+            sellerAddToolStripMenuItem = new ToolStripMenuItem();
+            customerAddToolStripMenuItem2 = new ToolStripMenuItem();
             ProductList = new ListBox();
             UserCart = new ListBox();
             SummaryLadel = new Label();
@@ -64,53 +63,29 @@
             // 
             // productToolStripMenuItem
             // 
-            productToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { productAddToolStripMenuItem1 });
             productToolStripMenuItem.Name = "productToolStripMenuItem";
-            productToolStripMenuItem.Size = new Size(139, 22);
+            productToolStripMenuItem.Size = new Size(180, 22);
             productToolStripMenuItem.Text = "Товар";
             productToolStripMenuItem.Click += ProductToolStripMenuItem_Click;
             // 
-            // productAddToolStripMenuItem1
-            // 
-            productAddToolStripMenuItem1.Name = "productAddToolStripMenuItem1";
-            productAddToolStripMenuItem1.Size = new Size(126, 22);
-            productAddToolStripMenuItem1.Text = "Добавить";
-            productAddToolStripMenuItem1.Click += ProductAddToolStripMenuItem1_Click;
-            // 
             // sellerToolStripMenuItem
             // 
-            sellerToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { sellerAddToolStripMenuItem });
             sellerToolStripMenuItem.Name = "sellerToolStripMenuItem";
-            sellerToolStripMenuItem.Size = new Size(139, 22);
+            sellerToolStripMenuItem.Size = new Size(180, 22);
             sellerToolStripMenuItem.Text = "Продавец";
             sellerToolStripMenuItem.Click += SellerToolStripMenuItem_Click;
             // 
-            // sellerAddToolStripMenuItem
-            // 
-            sellerAddToolStripMenuItem.Name = "sellerAddToolStripMenuItem";
-            sellerAddToolStripMenuItem.Size = new Size(126, 22);
-            sellerAddToolStripMenuItem.Text = "Добавить";
-            sellerAddToolStripMenuItem.Click += SellerAddToolStripMenuItem2_Click;
-            // 
             // customerToolStripMenuItem
             // 
-            customerToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { customerAddToolStripMenuItem2 });
             customerToolStripMenuItem.Name = "customerToolStripMenuItem";
-            customerToolStripMenuItem.Size = new Size(139, 22);
+            customerToolStripMenuItem.Size = new Size(180, 22);
             customerToolStripMenuItem.Text = "Покупатель";
             customerToolStripMenuItem.Click += CustomerToolStripMenuItem_Click;
-            // 
-            // customerAddToolStripMenuItem2
-            // 
-            customerAddToolStripMenuItem2.Name = "customerAddToolStripMenuItem2";
-            customerAddToolStripMenuItem2.Size = new Size(126, 22);
-            customerAddToolStripMenuItem2.Text = "Добавить";
-            customerAddToolStripMenuItem2.Click += CustomerAddToolStripMenuItem2_Click;
             // 
             // checkToolStripMenuItem
             // 
             checkToolStripMenuItem.Name = "checkToolStripMenuItem";
-            checkToolStripMenuItem.Size = new Size(139, 22);
+            checkToolStripMenuItem.Size = new Size(180, 22);
             checkToolStripMenuItem.Text = "Чек";
             checkToolStripMenuItem.Click += CheckToolStripMenuItem_Click;
             // 
@@ -120,6 +95,16 @@
             ModelToolStripMenuItem.Size = new Size(109, 20);
             ModelToolStripMenuItem.Text = "Моделирование";
             ModelToolStripMenuItem.Click += ModelToolStripMenuItem_Click;
+            // 
+            // sellerAddToolStripMenuItem
+            // 
+            sellerAddToolStripMenuItem.Name = "sellerAddToolStripMenuItem";
+            sellerAddToolStripMenuItem.Size = new Size(32, 19);
+            // 
+            // customerAddToolStripMenuItem2
+            // 
+            customerAddToolStripMenuItem2.Name = "customerAddToolStripMenuItem2";
+            customerAddToolStripMenuItem2.Size = new Size(32, 19);
             // 
             // ProductList
             // 
@@ -188,7 +173,7 @@
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
             Name = "Main";
-            Text = "Form1";
+            Text = "Main";
             Load += Main_Load;
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
@@ -204,7 +189,6 @@
         private ToolStripMenuItem sellerToolStripMenuItem;
         private ToolStripMenuItem customerToolStripMenuItem;
         private ToolStripMenuItem checkToolStripMenuItem;
-        private ToolStripMenuItem productAddToolStripMenuItem1;
         private ToolStripMenuItem sellerAddToolStripMenuItem;
         private ToolStripMenuItem customerAddToolStripMenuItem2;
         private ToolStripMenuItem ModelToolStripMenuItem;

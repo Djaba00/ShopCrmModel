@@ -1,27 +1,16 @@
-﻿using CrmBL.Models;
-using ShopCRM.DAL.Entities;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+﻿using CrmWinForm.VIewModels;
 
 namespace CrmWinForm
 {
     public partial class ProductForm : Form
     {
-        public ProductDTO Product { get; set; }
+        public ProductViewModel Product { get; set; }
         public ProductForm()
         {
             InitializeComponent();
         }
 
-        public ProductForm(ProductDTO product) : this()
+        public ProductForm(ProductViewModel product) : this()
         {
             Product = product;
             textBox1.Text = product.Name;
@@ -36,7 +25,7 @@ namespace CrmWinForm
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Product = Product ?? new ProductDTO();
+            Product = Product ?? new ProductViewModel();
 
             Product.Name = textBox1.Text;
             Product.Price = numericUpDown1.Value;

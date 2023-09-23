@@ -20,7 +20,7 @@ namespace CrmBL.Models.Tests
         {
             var mapperConfig = new MapperConfiguration((v) =>
             {
-                v.AddProfile(new MappingProfile());
+                v.AddProfile(new MappingProfileBLL());
             });
 
             IMapper mapper = mapperConfig.CreateMapper();

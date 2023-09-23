@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ShopCRM.DAL.Entities;
 using ShopCRM.BLL.BusinesModels;
+using ShopCRM.BLL.DTO;
 
 namespace CrmBL.Models.Tests
 {

@@ -1,24 +1,20 @@
-﻿using CrmBL.Models;
+﻿using AutoMapper;
 using CrmWinForm.Helpers;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+using ShopCRM.BLL.ComputerModel;
 
 namespace CrmWinForm
 {
     public partial class ModelForm : Form
     {
-        ShopComputerModel model = new ShopComputerModel();
+        IMapper mapper;
+        ShopComputerModel model;
 
-        public ModelForm()
+        public ModelForm(IMapper mapper)
         {
             InitializeComponent();
+
+            this.mapper = mapper;
+            model = new ShopComputerModel(mapper);
         }
 
         private void ModelForm_Load(object sender, EventArgs e)
