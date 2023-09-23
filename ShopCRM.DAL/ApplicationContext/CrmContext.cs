@@ -10,6 +10,12 @@ namespace ShopCRM.DAL.ApplicationContext
 {
     public class CrmContext : DbContext
     {
+        public DbSet<Check> Checks { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Sell> Sells { get; set; }
+        public DbSet<Seller> Sellers { get; set; }
+
         public CrmContext()
         {
         }
@@ -21,11 +27,13 @@ namespace ShopCRM.DAL.ApplicationContext
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Product>().Property(p => p.Price).HasPrecision(14, 2);
+
+            modelBuilder.Entity<Check>().HasKey(p => p.CheckId);
+            modelBuilder.Entity<Customer>().HasKey(p => p.CustomerId);
+            modelBuilder.Entity<Product>().HasKey(p => p.ProductId);
+            modelBuilder.Entity<Sell>().HasKey(p => p.SellId);
+            modelBuilder.Entity<Seller>().HasKey(p => p.SellerId);
         }
-        public DbSet<Check> Checks { get; set; }
-        public DbSet<Customer> Customers { get; set; }
-        public DbSet<Product> Products { get; set; }
-        public DbSet<Sell> Sells { get; set; }
-        public DbSet<Seller> Sellers { get; set; }
+        
     }
 }

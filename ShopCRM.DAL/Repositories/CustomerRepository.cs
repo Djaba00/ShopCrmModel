@@ -34,9 +34,10 @@ namespace ShopCRM.DAL.Repositories
             db.Customers.Entry(item).State = EntityState.Modified;
         }
 
-        public async Task CreateAsync(Customer item)
+        public async Task<Customer?> CreateAsync(Customer item)
         {
-            await db.Customers.AddAsync(item);
+            var result = await db.Customers.AddAsync(item);
+            return result.Entity;
         }
 
         public async Task DeleteAsync(int id)

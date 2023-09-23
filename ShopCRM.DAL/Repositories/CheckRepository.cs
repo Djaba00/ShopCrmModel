@@ -31,9 +31,10 @@ namespace ShopCRM.DAL.Repositories
             db.Checks.Entry(item).State = EntityState.Modified;
         }
 
-        public async Task CreateAsync(Check item)
+        public async Task<Check?> CreateAsync(Check item)
         {
-            await db.Checks.AddAsync(item);
+            var result = await db.Checks.AddAsync(item);
+            return result.Entity;
         }
 
         public async Task DeleteAsync(int id)

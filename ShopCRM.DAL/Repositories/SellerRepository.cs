@@ -13,32 +13,32 @@ namespace ShopCRM.DAL.Repositories
     public class SellerRepository : IRepository<Seller>
     {
         CrmContext db;
-        public List<Seller> SellerList;
 
         public SellerRepository(CrmContext db)
         {
             this.db = db;
-            SellerList  = db.Sellers.ToList();
         }
 
         public async Task<IEnumerable<Seller>> GetAllAsync()
         {
-            return await db.Sellers.ToListAsync();
+            return await db.Sellers.AsQueryable().AsNoTracking().ToListAsync();
         }
 
         public async Task<Seller?> GetAsync(int id)
         {
-            return await db.Sellers.FirstOrDefaultAsync(c => c.SellerId == id);
+            return await db.Sellers.AsQueryable().AsNoTracking().FirstOrDefaultAsync(c => c.SellerId == id);
         }
 
         public async Task UpdateAsync(Seller item)
         {
-            db.Sellers.Entry(item).State = EntityState.Modified;
+            db.Sellers.Entry(item).State = EntityState.Detached;
+            db.Sellers.Update(item);
         }
 
-        public async Task CreateAsync(Seller item)
+        public async Task<Seller?> CreateAsync(Seller item)
         {
-            await db.Sellers.AddAsync(item);
+            var result = await db.Sellers.AddAsync(item);
+            return result.Entity;
         }
 
         public async Task DeleteAsync(int id)
