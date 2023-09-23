@@ -2,6 +2,8 @@
 using CrmWinForm.VIewModels;
 using ShopCRM.BLL.DTO;
 using ShopCRM.BLL.Interfaces;
+using ShopCRM.BLL.Services;
+using ShopCRM.DAL.Entities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,6 +21,8 @@ namespace CrmWinForm.Catalogs
         IMapper mapper;
         IProductService productService;
 
+        BindingList<ProductViewModel> Products;
+
         public ProductCatalog()
         {
             InitializeComponent();
@@ -29,11 +33,22 @@ namespace CrmWinForm.Catalogs
             InitializeComponent();
             this.mapper = mapper;
             this.productService = productService;
+
+            Products = new BindingList<ProductViewModel>();
         }
 
-        private void Catalog_Load(object sender, EventArgs e)
+        private async void Catalog_Load(object sender, EventArgs e)
         {
+            var data = await productService.GetAllAsync();
 
+            var productsList = data.Select(c => mapper.Map<ProductViewModel>(c)).ToList();
+
+            foreach (var product in productsList)
+            {
+                Products.Add(product);
+            }
+
+            dataGridView.DataSource = Products;
         }
 
         private async void AddButton_Click(object sender, EventArgs e)
@@ -42,10 +57,11 @@ namespace CrmWinForm.Catalogs
             if (form.ShowDialog() == DialogResult.OK)
             {
                 var newProduct = mapper.Map<ProductDTO>(form.Product);
-                await productService.CreateAsync(newProduct);
+                var product = await productService.CreateAsync(newProduct);
+
+                Products.Add(mapper.Map<ProductViewModel>(product));
                 dataGridView.Refresh();
             }
-
         }
 
         private async void UpdateButton_Click(object sender, EventArgs e)
@@ -61,9 +77,11 @@ namespace CrmWinForm.Catalogs
                 var form = new ProductForm(product);
                 if (form.ShowDialog() == DialogResult.OK)
                 {
-                    product = form.Product;
-                    var updateProduct = mapper.Map<ProductDTO>(product);
+                    var updateProduct = mapper.Map<ProductDTO>(form.Product);
                     await productService.UpdateAsync(updateProduct);
+                    var index = Products.IndexOf(Products.First(c => c.ProductId == updateProduct.ProductId));
+                    Products[index] = product;
+
                     dataGridView.Refresh();
                 }
             }
@@ -80,6 +98,8 @@ namespace CrmWinForm.Catalogs
             if (product != null)
             {
                 await productService.DeleteAsync((int)id);
+                Products.Remove(Products.First(c => c.ProductId == (int)id));
+
                 dataGridView.Refresh();
             }
         }

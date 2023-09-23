@@ -31,7 +31,15 @@ namespace ShopCRM.DAL.Repositories
 
         public async Task UpdateAsync(Product item)
         {
-            db.Products.Entry(item).State = EntityState.Modified;
+            var product = await GetAsync(item.ProductId);
+
+            db.Products.Entry(product).State = EntityState.Detached;
+
+            product.Name = item.Name;
+            product.Price = item.Price;
+            product.Count = item.Count;
+
+            db.Products.Update(product);
         }
 
         public async Task<Product?> CreateAsync(Product item)

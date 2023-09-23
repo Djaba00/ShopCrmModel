@@ -72,7 +72,7 @@ namespace CrmWinForm
                     var updateSeller = mapper.Map<SellerDTO>(form.Seller);
                     await sellerService.UpdateAsync(updateSeller);
 
-                    var index = Sellers.IndexOf(seller);
+                    var index = Sellers.IndexOf(Sellers.First(c => c.SellerId == updateSeller.SellerId));
                     Sellers[index] = seller;
 
                     dataGridView.Refresh();

@@ -2,6 +2,8 @@
 using CrmWinForm.VIewModels;
 using ShopCRM.BLL.DTO;
 using ShopCRM.BLL.Interfaces;
+using ShopCRM.BLL.Services;
+using ShopCRM.DAL.Entities;
 using System.ComponentModel;
 using System.Data;
 
@@ -11,6 +13,7 @@ namespace CrmWinForm
     {
         IMapper mapper;
         ICustomerService customerService;
+        BindingList<CustomerViewModel> Customers;
 
         public CustomerCatalog()
         {
@@ -22,11 +25,22 @@ namespace CrmWinForm
             InitializeComponent();
             this.mapper = mapper;
             this.customerService = customerService;
+
+            Customers = new BindingList<CustomerViewModel>();
         }
 
-        private void Catalog_Load(object sender, EventArgs e)
+        private async void Catalog_Load(object sender, EventArgs e)
         {
+            var data = await customerService.GetAllAsync();
 
+            var customersList = data.Select(c => mapper.Map<CustomerViewModel>(c)).ToList();
+
+            foreach (var customer in customersList)
+            {
+                Customers.Add(customer);
+            }
+
+            dataGridView.DataSource = Customers;
         }
 
         private async void AddButton_Click(object sender, EventArgs e)
@@ -35,7 +49,9 @@ namespace CrmWinForm
             if (form.ShowDialog() == DialogResult.OK)
             {
                 var newCustomer = mapper.Map<CustomerDTO>(form.Customer);
-                await customerService.CreateAsync(newCustomer);
+                var customer = await customerService.CreateAsync(newCustomer);
+
+                Customers.Add(mapper.Map<CustomerViewModel>(customer));
                 dataGridView.Refresh();
             }
         }
@@ -53,11 +69,13 @@ namespace CrmWinForm
                 var form = new CustomerForm(customer);
                 if (form.ShowDialog() == DialogResult.OK)
                 {
-                    customer = form.Customer;
-                    var updateCustomer = mapper.Map<CustomerDTO>(customer);
+                    var updateCustomer = mapper.Map<CustomerDTO>(form.Customer);
                     await customerService.UpdateAsync(updateCustomer);
+                    var index = Customers.IndexOf(Customers.First(c => c.CustomerId == updateCustomer.CustomerId));
+                    Customers[index] = customer;
+
                     dataGridView.Refresh();
-                }    
+                }
             }
         }
 
@@ -72,6 +90,8 @@ namespace CrmWinForm
             if (customer != null)
             {
                 await customerService.DeleteAsync((int)id);
+                Customers.Remove(Customers.First(c => c.CustomerId == (int)id));
+
                 dataGridView.Refresh();
             }
         }
