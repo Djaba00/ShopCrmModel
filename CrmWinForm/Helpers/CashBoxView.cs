@@ -1,6 +1,8 @@
 ﻿using CrmWinForm.VIewModels;
 using ShopCRM.BLL.BusinesModels;
 using ShopCRM.BLL.DTO;
+using ShopCRM.BLL.Interfaces;
+using ShopCRM.BLL.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,15 +14,15 @@ namespace CrmWinForm.Helpers
 {
     public class CashBoxView
     {
-        CashDesk cashDesk;
+        ICashDeskService cashDeskService;
         public Label CashDeskName { get; private set; }
         public NumericUpDown Price { get; private set; }
         public ProgressBar QueueLenght { get; private set; }
         public Label LeaveCustomersCount { get; private set; }
 
-        public CashBoxView(CashDesk cashDesk, int number, int x, int y)
+        public CashBoxView(ICashDeskService cashDesk, int number, int x, int y)
         {
-            this.cashDesk = cashDesk;
+            this.cashDeskService = cashDesk;
 
             CashDeskName = new Label();
             Price = new NumericUpDown();
@@ -41,7 +43,7 @@ namespace CrmWinForm.Helpers
             Price.Maximum = 100000000;
 
             QueueLenght.Location = new Point(x + 150, y);
-            QueueLenght.Maximum = cashDesk.MaxQueueLenght;
+            QueueLenght.Maximum = cashDeskService.CashDesk.MaxQueueLenght;
             QueueLenght.Name = "progressBar" + number;
             QueueLenght.Size = new Size(100, 23);
             QueueLenght.TabIndex = number;
@@ -62,8 +64,8 @@ namespace CrmWinForm.Helpers
             Price?.Invoke((Action)delegate
             {
                 Price.Value += e.Price;
-                QueueLenght.Value = cashDesk.Count;
-                CashDeskName.Text = cashDesk.ExitCustomer.ToString();
+                QueueLenght.Value = cashDeskService.CashDesk.Count;
+                CashDeskName.Text = cashDeskService.CashDesk.ExitCustomer.ToString();
             });
         }
     }

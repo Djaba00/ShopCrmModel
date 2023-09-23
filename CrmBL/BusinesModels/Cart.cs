@@ -7,7 +7,6 @@ namespace ShopCRM.BLL.BusinesModels
     {
         public CustomerDTO Customer { get; set; }
         public Dictionary<ProductDTO, int> Products { get; private set; }
-        //public decimal Price => GetAll().Sum(p => p.Price);
 
         public Cart(CustomerDTO customer)
         {
@@ -47,6 +46,11 @@ namespace ShopCRM.BLL.BusinesModels
                 result.Add(item);
             }
             return result;
+        }
+
+        public decimal GetPrice()
+        {
+            return GetAll().Sum(p => p.Price);
         }
     }
 }

@@ -5,6 +5,7 @@ using ShopCRM.BLL.BusinesModels;
 using ShopCRM.BLL.DTO;
 using ShopCRM.BLL.Interfaces;
 using ShopCRM.BLL.Services;
+using ShopCRM.DAL.Entities;
 
 namespace CrmWinForm
 {
@@ -14,13 +15,19 @@ namespace CrmWinForm
         IProductService productService;
         ICustomerService customerService;
         ICheckService checkService;
+        ICashDeskService cashDeskService;
 
         IMapper mapper;
         Cart Cart;
         CustomerViewModel Customer;
-        CashDesk CashDesk;
 
-        public Main(ISellerService sellerService, IProductService productService, ICustomerService customerService, ICheckService checkService, IMapper mapper)
+        public Main(
+            ISellerService sellerService, 
+            IProductService productService, 
+            ICustomerService customerService, 
+            ICheckService checkService, 
+            ICashDeskService cashDeskService, 
+            IMapper mapper)
         {
             InitializeComponent();
 
@@ -28,16 +35,12 @@ namespace CrmWinForm
             this.productService = productService;
             this.customerService = customerService;
             this.checkService = checkService;
+            this.cashDeskService = cashDeskService;
             this.mapper = mapper;
 
             var customerDto = mapper.Map<CustomerDTO>(Customer);
 
             Cart = new Cart(customerDto);
-
-            //CashDesk = new CashDesk(1, sellerService.Sellers.FirstOrDefault(), services, mapper)
-            //{
-            //    IsModel = false
-            //};
         }
 
         private async void Main_Load(object sender, EventArgs e)
@@ -89,66 +92,79 @@ namespace CrmWinForm
 
         private async void ProductList_DoubleClick(object sender, EventArgs e)
         {
-            //if (ProductList.SelectedItem is Product product)
-            //{
-            //    Cart.Add(product);
-            //    UserCart.Items.Add(product);
-            //    UpdateLists();
-            //}
+            if (ProductList.SelectedItem is ProductViewModel productVm)
+            {
+                var productDto = mapper.Map<ProductDTO>(productVm);
+
+                Cart.Add(productDto);
+                UserCart.Items.Add(productDto);
+                UpdateLists();
+            }
         }
 
         private async void UpdateLists()
         {
-            //UserCart.Items.Clear();
-            //UserCart.Items.AddRange(Cart.GetAll().ToArray());
-            //SummaryLadel.Text = "Итого: " + Cart.Price.ToString();
+            UserCart.Items.Clear();
+            UserCart.Items.AddRange(Cart.GetAll().ToArray());
+
+            var price = Cart.GetPrice();
+
+            SummaryLadel.Text = "Итого: " + price.ToString();
         }
 
-        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private async void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            //var form = new Login();
-            //form.ShowDialog();
-            //if (form.DialogResult == DialogResult.OK)
-            //{
-            //    var tempCustomer = db.Customers.FirstOrDefault(c => c.Name.Equals(form.Customer.Name));
-            //    if (!(tempCustomer is null))
-            //    {
-            //        Customer = tempCustomer;
-            //    }
-            //    else
-            //    {
-            //        db.Customers.Add(form.Customer);
-            //        db.SaveChanges();
-            //        Customer = form.Customer;
-            //    }
-            //    Cart.Customer = Customer;
-            //}
+            var form = new Login();
+            form.ShowDialog();
+            if (form.DialogResult == DialogResult.OK)
+            {
+                var customers = await customerService.GetAllAsync();
 
-            //linkLabel1.Text = $"Здравсвуй, {Customer.Name}";
+                var customerDto = customers.FirstOrDefault(c => c.Name.Equals(form.Customer.Name));
+
+                var customer = mapper.Map<CustomerViewModel>(customerDto);
+
+                if (!(customer is null))
+                {
+                    Customer = customer;
+                }
+                else
+                {
+                    await customerService.CreateAsync(customerDto);
+                    Customer = customer;
+                }
+
+                Cart.Customer = customerDto;
+            }
+
+            linkLabel1.Text = $"Здравсвуй, {Customer.Name}";
         }
 
-        private void BuyButton_Click(object sender, EventArgs e)
+        private async void BuyButton_Click(object sender, EventArgs e)
         {
-            //if (!(Customer is null))
-            //{
-            //    if(Cart.Products.Count > 0)
-            //    {
-            //        CashDesk.Enqueue(Cart);
-            //        var price = CashDesk.Dequeue();
-            //        UserCart.Items.Clear();
-            //        Cart = new Cart(Customer);
+            if (!(Customer is null))
+            {
+                if (Cart.Products.Count > 0)
+                {
+                    cashDeskService.Enqueue(Cart);
+                    var price = await cashDeskService.Dequeue();
 
-            //        MessageBox.Show($"Покупка выполнена успешно! Сумма: {price} руб.", "Покупка выполненна");
-            //    }
-            //    else
-            //    {
-            //        MessageBox.Show($"Ваша корзина пуста!", "", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            //    }
-            //}
-            //else
-            //{
-            //    MessageBox.Show("Авторизируйтесь, пожалуйста", "", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            //}
+                    UserCart.Items.Clear();
+
+                    var customerDto = mapper.Map<CustomerDTO>(Customer);
+                    Cart = new Cart(customerDto);
+
+                    MessageBox.Show($"Покупка выполнена успешно! Сумма: {price} руб.", "Покупка выполненна");
+                }
+                else
+                {
+                    MessageBox.Show($"Ваша корзина пуста!", "", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Авторизируйтесь, пожалуйста", "", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
     }
 }

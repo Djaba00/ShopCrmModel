@@ -25,11 +25,12 @@ namespace CrmWinForm.Configurations
 
             services.AddSingleton(mapper);
 
-            services.AddTransient<ICheckService, CheckService>();
-            services.AddTransient<ICustomerService, CustomerService>();
-            services.AddTransient<IProductService, ProductService>();
-            services.AddTransient<ISellerService, SellerService>();
-            services.AddTransient<ISellService, SellService>();
+            services.AddScoped<ICheckService, CheckService>();
+            services.AddScoped<ICustomerService, CustomerService>();
+            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<ISellerService, SellerService>();
+            services.AddScoped<ISellService, SellService>();
+            services.AddScoped<ICashDeskService, CashDeskService>();
 
             return services;
         }

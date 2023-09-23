@@ -48,7 +48,7 @@ namespace ShopCRM.BLL.ComputerModel
 
             for (int i = 0; i < 3; i++)
             {
-                CashDesks.Add(new CashDesk(CashDesks.Count, Sellers.Dequeue(), null, mapper));
+                //CashDesks.Add(new CashDesk(CashDesks.Count, Sellers.Dequeue(), null, mapper));
             }
             
         }
@@ -77,7 +77,7 @@ namespace ShopCRM.BLL.ComputerModel
             {
                 if (cashDesk.Count > 0)
                 {
-                    cashDesk.Dequeue();
+                   // cashDesk.Dequeue();
                     Thread.Sleep(CashDeskSpeed);
                 }
             }
@@ -99,7 +99,7 @@ namespace ShopCRM.BLL.ComputerModel
                     }
 
                     var cash = CashDesks[rnd.Next(CashDesks.Count)];
-                    cash.Enqueue(cart);                    
+                    //cash.Enqueue(cart);                    
                 }
                 Thread.Sleep(CustomerSpeed);
             }
