@@ -1,4 +1,4 @@
-﻿namespace ShopCRM.DAL.Entities
+﻿namespace ShopCRM.BLL.DTO
 {
     public class ProductDTO
     {

@@ -1,16 +1,11 @@
 ﻿using AutoMapper;
+using ShopCRM.BLL.DTO;
 using ShopCRM.BLL.Interfaces;
 using ShopCRM.DAL.Entities;
 using ShopCRM.DAL.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace ShopCRM.BLL.Services
 {
-    public class SellService : IEntityService<SellDTO>
+    public class SellService : ISellService
     {
         IContextUnitOfWork db;
         IMapper mapper;
@@ -44,11 +39,14 @@ namespace ShopCRM.BLL.Services
             return result;
         }
 
-        public async Task CreateAsync(SellDTO item)
+        public async Task<SellDTO?> CreateAsync(SellDTO item)
         {
             var newsell = mapper.Map<Sell>(item);
 
-            await db.Sells.CreateAsync(newsell);
+            var result = await db.Sells.CreateAsync(newsell);
+            await db.Save();
+
+            return mapper.Map<SellDTO>(result);
         }
 
         public async Task UpdateAsync(SellDTO item)
@@ -56,11 +54,13 @@ namespace ShopCRM.BLL.Services
             var updateSell = mapper.Map<Sell>(item);
 
             await db.Sells.UpdateAsync(updateSell);
+            await db.Save();
         }
 
         public async Task DeleteAsync(int id)
         {
             await db.Sells.DeleteAsync(id);
+            await db.Save();
         }
     }
 }

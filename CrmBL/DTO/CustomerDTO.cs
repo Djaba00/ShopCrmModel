@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ShopCRM.DAL.Entities
+namespace ShopCRM.BLL.DTO
 {
     public class CustomerDTO
     {

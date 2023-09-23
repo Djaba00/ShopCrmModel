@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
+using ShopCRM.BLL.DTO;
 using ShopCRM.BLL.Interfaces;
 using ShopCRM.DAL.Entities;
 using ShopCRM.DAL.Interfaces;
 
 namespace ShopCRM.BLL.Services
 {
-    public class CustomerService : IEntityService<CustomerDTO>
+    public class CustomerService : ICustomerService
     {
         IContextUnitOfWork db;
         IMapper mapper;
@@ -39,11 +40,14 @@ namespace ShopCRM.BLL.Services
             return result;
         }
 
-        public async Task CreateAsync(CustomerDTO item)
+        public async Task<CustomerDTO?> CreateAsync(CustomerDTO item)
         {
             var newCustomer = mapper.Map<Customer>(item);
 
-            await db.Customers.CreateAsync(newCustomer);
+            var result = await db.Customers.CreateAsync(newCustomer);
+            await db.Save();
+
+            return mapper.Map<CustomerDTO>(newCustomer);
         }
 
         public async Task UpdateAsync(CustomerDTO item)
@@ -51,11 +55,13 @@ namespace ShopCRM.BLL.Services
             var updateCustomer = mapper.Map<Customer>(item);
 
             await db.Customers.UpdateAsync(updateCustomer);
+            await db.Save();
         }
 
         public async Task DeleteAsync(int id)
         {
             await db.Customers.DeleteAsync(id);
+            await db.Save();
         }
     }
 }

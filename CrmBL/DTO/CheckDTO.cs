@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShopCRM.DAL.Entities
+namespace ShopCRM.BLL.DTO
 {
     public class CheckDTO
     {

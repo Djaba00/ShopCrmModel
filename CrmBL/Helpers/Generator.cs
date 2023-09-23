@@ -1,4 +1,5 @@
 ﻿using ShopCRM.BLL.BusinesModels;
+using ShopCRM.BLL.DTO;
 using ShopCRM.DAL.Entities;
 using System;
 using System.Collections.Generic;

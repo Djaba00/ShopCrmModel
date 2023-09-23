@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ShopCRM.BLL.BusinesModels;
 using AutoMapper;
+using ShopCRM.BLL.DTO;
 
 namespace ShopCRM.BLL.ComputerModel
 {

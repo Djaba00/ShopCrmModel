@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using ShopCRM.BLL.DTO;
 using ShopCRM.BLL.Services;
 using ShopCRM.DAL.ApplicationContext;
 using ShopCRM.DAL.Entities;
@@ -9,7 +10,7 @@ namespace ShopCRM.BLL.BusinesModels
 {
     public class CashDesk
     {
-        public IServiceUnitOfWork db { get; }
+        public IContextUnitOfWork db { get; }
         public IMapper mapper { get; set; }
 
         public int Number { get; set; }
@@ -22,7 +23,7 @@ namespace ShopCRM.BLL.BusinesModels
 
         public event EventHandler<CheckDTO> CheckClosed;
 
-        public CashDesk(int number, SellerDTO seller, IServiceUnitOfWork db, IMapper mapper)
+        public CashDesk(int number, SellerDTO seller, IContextUnitOfWork db, IMapper mapper)
         {
             Number = number;
             Seller = seller;
@@ -30,7 +31,7 @@ namespace ShopCRM.BLL.BusinesModels
             IsModel = true;
             MaxQueueLenght = 100;
             this.mapper = mapper;
-            this.db = db ?? new ServiceUnitOfWork(new ContextUnitOfWork(), mapper);
+            this.db = db ?? new ContextUnitOfWork();
         }
 
         public void Enqueue(Cart cart)
@@ -68,7 +69,7 @@ namespace ShopCRM.BLL.BusinesModels
 
                 if (!IsModel)
                 {
-                    await db.ChecksDTO.CreateAsync(check);
+                    await db.Checks.CreateAsync(mapper.Map<Check>(check));
                 }
                 else
                 {
@@ -93,7 +94,7 @@ namespace ShopCRM.BLL.BusinesModels
 
                         if (!IsModel)
                         {
-                            db.SellsDTO.CreateAsync(sell);
+                            db.Sells.CreateAsync(mapper.Map<Sell>(sell));
                         }
 
                         product.Count--;
@@ -105,7 +106,7 @@ namespace ShopCRM.BLL.BusinesModels
 
                 if (!IsModel)
                 {
-                    db.ChecksDTO.UpdateAsync(check);
+                    db.Checks.UpdateAsync(mapper.Map<Check>(check));
                 }
 
                 CheckClosed?.Invoke(this, check);

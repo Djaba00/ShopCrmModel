@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
+using ShopCRM.BLL.DTO;
 using ShopCRM.DAL.Entities;
 
 namespace ShopCRM.BLL.Configurations
 {
-    public class MappingProfile : Profile
+    public class MappingProfileBLL : Profile
     {
-        public MappingProfile()
+        public MappingProfileBLL()
         {
             CreateMap<CheckDTO, Check>();
             CreateMap<Check, CheckDTO>();
